@@ -28,7 +28,7 @@ on:
         type: string
 
 concurrency:
-  group: build-duxo-${{ inputs.ref || github.ref }}
+  group: build-duxo-${{ inputs.ref || github.ref }}-${{ github.sha }}
   cancel-in-progress: true
 
 permissions:

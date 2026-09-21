@@ -21,7 +21,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: rust-${{ github.workflow }}-${{ github.ref }}
+  group: rust-${{ github.workflow }}-${{ github.ref }}-${{ github.sha }}
   cancel-in-progress: true
 
 permissions:

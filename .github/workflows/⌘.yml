@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: electron-${{ github.workflow }}-${{ github.ref }}
+  group: electron-${{ github.workflow }}-${{ github.ref }}-${{ github.sha }}
   cancel-in-progress: true
 
 permissions:
@@ -92,6 +92,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: desktop
+        shell: bash
         run: |
           if [ -s package-lock.json ]; then
             npm ci --no-audit --no-fund
