@@ -92,6 +92,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: desktop
+        shell: bash
         run: |
           if [ -s package-lock.json ]; then
             npm ci --no-audit --no-fund
