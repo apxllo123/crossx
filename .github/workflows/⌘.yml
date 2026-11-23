@@ -138,6 +138,10 @@ jobs:
           node --check desktop/dist-renderer/renderer.js
           test "$(node -p 'require("./desktop/package.json").main')" = "dist-electron/main.js"
 
+      - name: Validate bridge and runtime names
+        working-directory: desktop
+        run: npm run check:bridge
+
       - name: Prepare application icons
         working-directory: desktop
         run: npm run prepare-icons
