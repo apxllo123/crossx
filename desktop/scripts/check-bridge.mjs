@@ -3,7 +3,9 @@ import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const desktopRoot = resolve(fileURLToPath(new URL('..', import.meta.url)));
-const read = (path) => readFileSync(join(desktopRoot, path), 'utf8');
+// tsc emits the host newline when tsconfig sets no newLine option, so the Windows build is CRLF
+// and the line-anchored patterns below would miss.
+const read = (path) => readFileSync(join(desktopRoot, path), 'utf8').replace(/\r\n/g, '\n');
 const windowGlobals = new Set(['location', 'setTimeout', 'setInterval', 'clearTimeout', 'clearInterval', 'addEventListener', 'removeEventListener', 'document', 'console']);
 const failures = [];
 
