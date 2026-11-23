@@ -92,6 +92,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: desktop
+        shell: bash
         run: |
           if [ -s package-lock.json ]; then
             npm ci --no-audit --no-fund
@@ -179,7 +180,13 @@ jobs:
             git rev-parse HEAD
             git status --short
             echo "=== Generated desktop tree ==="
-            find desktop/dist-electron desktop/dist-renderer desktop/build -maxdepth 2 -type f -print 2>/dev/null | sort
+            for dir in desktop/dist-electron desktop/dist-renderer desktop/build; do
+              if [ -d "$dir" ]; then
+                find "$dir" -maxdepth 2 -type f -print
+              else
+                echo "missing: $dir"
+              fi
+            done | sort
           } > ci-report/build-diagnostics.txt
 
       - name: Upload Electron CI diagnostics
