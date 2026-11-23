@@ -1,8 +1,8 @@
 declare global {
   interface Window {
-    akron: {
+    duxo: {
       getAppInfo(): Promise<{
-        name: 'Akron';
+        name: 'Duxo';
         version: string;
         platform: 'darwin' | 'win32';
         arch: string;
@@ -242,14 +242,14 @@ function updateStartup(progress: { message: string; percent: number; complete: b
 
 async function initializeAkron(): Promise<void> {
   updateStartup({ message: 'Starting Akron…', percent: 0, complete: false });
-  const unsubscribe = window.akron.onStartupProgress(updateStartup);
+  const unsubscribe = window.duxo.onStartupProgress(updateStartup);
 
   try {
-    await window.akron.getAppInfo().then((info) => {
+    await window.duxo.getAppInfo().then((info) => {
       if (version) version.textContent = `v${info.version} · ${info.arch}`;
     });
 
-    await window.akron.prepareStartup();
+    await window.duxo.prepareStartup();
     updateStartup({ message: 'Akron is ready', percent: 100, complete: true });
 
     window.setTimeout(() => {
@@ -274,7 +274,7 @@ selectButton?.addEventListener('click', async () => {
   showError(null);
   planCard?.setAttribute('hidden', '');
   latestProfile = null;
-  const path = await window.akron.pickGameFolder();
+  const path = await window.duxo.pickGameFolder();
   if (!path) return;
 
   if (selectedPath) selectedPath.textContent = path;
@@ -282,7 +282,7 @@ selectButton?.addEventListener('click', async () => {
   if (results) results.hidden = true;
 
   try {
-    const report = await window.akron.analyzeGame(path);
+    const report = await window.duxo.analyzeGame(path);
     renderManifest(report);
     latestProfile = report.profile;
     renderProfile(report.profile);
@@ -300,7 +300,7 @@ planButton?.addEventListener('click', async () => {
   setStatus('Building conversion plan…', true);
   planButton.disabled = true;
   try {
-    const plan = await window.akron.buildAdaptationPlan(latestProfile);
+    const plan = await window.duxo.buildAdaptationPlan(latestProfile);
     renderPlan(plan);
     setStatus('Conversion plan ready', false);
   } catch (cause) {

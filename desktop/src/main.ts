@@ -36,8 +36,8 @@ process.on('unhandledRejection', (reason) => {
 let mainWindow: BrowserWindow | null = null;
 
 function analyzerBinaryPath(): string {
-  const binaryName = process.platform === 'win32' ? 'akron-analyzer.exe' : 'akron-analyzer';
-  const packagedPath = join(process.resourcesPath, 'akron-runtime', binaryName);
+  const binaryName = process.platform === 'win32' ? 'duxo-analyzer.exe' : 'duxo-analyzer';
+  const packagedPath = join(process.resourcesPath, 'duxo-runtime', binaryName);
   if (existsSync(packagedPath)) {
     return packagedPath;
   }
@@ -46,8 +46,8 @@ function analyzerBinaryPath(): string {
 }
 
 function adapterBinaryPath(): string {
-  const binaryName = process.platform === 'win32' ? 'akron-adapter.exe' : 'akron-adapter';
-  const packagedPath = join(process.resourcesPath, 'akron-runtime', binaryName);
+  const binaryName = process.platform === 'win32' ? 'duxo-adapter.exe' : 'duxo-adapter';
+  const packagedPath = join(process.resourcesPath, 'duxo-runtime', binaryName);
   if (existsSync(packagedPath)) {
     return packagedPath;
   }
@@ -114,10 +114,10 @@ function startupSplashHtml(): string {
   };
 
   const start = async () => {
-    const unsubscribe = window.akron.onStartupProgress(render);
+    const unsubscribe = window.duxo.onStartupProgress(render);
     try {
       render({ message: 'Starting Akron…', percent: 0, complete: false });
-      await window.akron.prepareStartup();
+      await window.duxo.prepareStartup();
       render({ message: 'Akron is ready', percent: 100, complete: true });
       await new Promise((resolve) => setTimeout(resolve, 140));
       window.location.replace(mainAppUrl);
